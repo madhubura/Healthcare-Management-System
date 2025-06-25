@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Appointment Details</title>
+</head>
+<body>
+	<div th:replace="~{common/navbar :: navbar}"></div>
+
+<div class="container mt-4">
+    <h2>Appointment Details</h2>
+    <p><strong>Doctor:</strong> <span th:text="${appointment.doctor.name}"></span></p>
+    <p><strong>Date:</strong> <span th:text="${appointment.date}"></span></p>
+    <p><strong>Time Slot:</strong> <span th:text="${appointment.timeSlot}"></span></p>
+    <a class="btn btn-secondary" th:href="@{/appointments}">Back to List</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Appointment</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container mt-4">
+    <h2>Create Appointment</h2>
+
+    <form th:action="@{/appointments/save}" th:object="${appointment}" method="post">
+        <div class="mb-3">
+            <label for="patient" class="form-label">Patient</label>
+            <select th:field="*{patient}" class="form-select" id="patient" required>
+                <option th:each="patient : ${patients}" th:value="${patient}" th:text="${patient.name}"></option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="doctor" class="form-label">Doctor</label>
+            <select th:field="*{doctor}" class="form-select" id="doctor" required>
+                <option th:each="doctor : ${doctors}" th:value="${doctor}" th:text="${doctor.name}"></option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input type="date" th:field="*{date}" class="form-control" id="date" required/>
+        </div>
+
+        <div class="mb-3">
+            <label for="timeSlot" class="form-label">Time Slot</label>
+            <input type="text" th:field="*{timeSlot}" class="form-control" id="timeSlot" placeholder="e.g. 10:00 AM - 10:30 AM" required/>
+        </div>
+
+        <button type="submit" class="btn btn-success">Save Appointment</button>
+        <a href="/appointments" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.querySelector('form').addEventListener('submit', function(event) {
+    const dateInput = document.getElementById('date');
+    const timeSlotInput = document.getElementById('timeSlot');
+    const selectedDate = new Date(dateInput.value);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (selectedDate < today) {
+      alert('Appointment date cannot be in the past.');
+      event.preventDefault();
+      return false;
+    }
+
+    if (!timeSlotInput.value.trim()) {
+      alert('Please enter a valid time slot.');
+      event.preventDefault();
+      return false;
+    }
+  });
+</script>
+
+</body>
+</html>
